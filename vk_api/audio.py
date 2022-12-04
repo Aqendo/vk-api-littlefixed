@@ -77,11 +77,12 @@ class VkAudio(object):
         }
     ]
 
-    def __init__(self, vk, convert_m3u8_links=True):
+    def __init__(self, vk, convert_m3u8_links=True, remixsid=None, remixnsid=None):
         self.user_id = vk.method('users.get')[0]['id']
         self._vk = vk
         self.convert_m3u8_links = convert_m3u8_links
-
+        self._vk.http.cookies.set("remixsid", remixsid, domain=".vk.com")
+        self._vk.http.cookies.set("remixnsid", remixnsid, domain=".vk.com")
         set_cookies_from_list(self._vk.http.cookies, self.DEFAULT_COOKIES)
 
         self._vk.http.get('https://m.vk.com/')  # load cookies
